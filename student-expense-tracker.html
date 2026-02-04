@@ -3,23 +3,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackSmart - Student Expense Tracker</title>
-    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
     <!-- Babel Standalone for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
-    <style>
+<style>
         :root {
             --primary: #10b981;
             --primary-dark: #059669;
@@ -718,9 +714,9 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
+<script type="text/babel">
         const { useState, useEffect, useRef } = React;
-
+    
         // ============================================
         // CATEGORY CONFIGURATION
         // ============================================
@@ -1392,155 +1388,4 @@
                                 tooltip: {
                                     callbacks: {
                                         label: function(context) {
-                                            return 'Total: ' + formatCurrency(context.parsed.y);
-                                        }
-                                    }
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        callback: function(value) {
-                                            return '₹' + value;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-
-                return () => {
-                    if (pieChartInstance.current) pieChartInstance.current.destroy();
-                    if (barChartInstance.current) barChartInstance.current.destroy();
-                    if (lineChartInstance.current) lineChartInstance.current.destroy();
-                };
-            }, [summary, selectedMonth, selectedYear, expenses]);
-
-            return (
-                <div>
-                    <div className="month-selector">
-                        <div className="month-nav">
-                            <button className="month-nav-btn" onClick={() => onMonthChange(-1)}>
-                                ◀
-                            </button>
-                        </div>
-                        <div className="month-display">
-                            {getMonthName(selectedMonth)} {selectedYear}
-                        </div>
-                        <div className="month-nav">
-                            <button className="month-nav-btn" onClick={() => onMonthChange(1)}>
-                                ▶
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="stats-grid">
-                        <div className="stat-card">
-                            <div className="stat-header">
-                                <div className="stat-icon primary">💵</div>
-                                <span className="stat-label">Total Spent</span>
-                            </div>
-                            <div className="stat-value">{formatCurrency(summary.total)}</div>
-                        </div>
-
-                        <div className="stat-card">
-                            <div className="stat-header">
-                                <div className="stat-icon accent">📊</div>
-                                <span className="stat-label">Average/Day</span>
-                            </div>
-                            <div className="stat-value">{formatCurrency(summary.avgDaily)}</div>
-                        </div>
-
-                        <div className="stat-card">
-                            <div className="stat-header">
-                                <div className="stat-icon secondary">🏆</div>
-                                <span className="stat-label">Top Category</span>
-                            </div>
-                            <div className="stat-value" style={{ fontSize: '1.5rem' }}>
-                                {summary.highest ? summary.highest.icon + ' ' + summary.highest.name : 'None'}
-                            </div>
-                        </div>
-
-                        <div className="stat-card">
-                            <div className="stat-header">
-                                <div className="stat-icon primary">📝</div>
-                                <span className="stat-label">Transactions</span>
-                            </div>
-                            <div className="stat-value">{summary.count}</div>
-                        </div>
-                    </div>
-
-                    {summary.byCategory.length > 0 && (
-                        <>
-                            <div className="category-breakdown">
-                                <h3>Category Breakdown</h3>
-                                {summary.byCategory.map(cat => (
-                                    <div key={cat.name} className="category-item">
-                                        <div className="category-color" style={{ backgroundColor: cat.color }} />
-                                        <span className="category-name">{cat.icon} {cat.name}</span>
-                                        <span className="category-amount">{formatCurrency(cat.total)}</span>
-                                        <span className="category-percentage">
-                                            {((cat.total / summary.total) * 100).toFixed(1)}%
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="chart-grid">
-                                <div className="chart-card">
-                                    <div className="chart-header">
-                                        <h3>📊 Category Distribution</h3>
-                                    </div>
-                                    <div className="chart-container">
-                                        <canvas ref={pieChartRef}></canvas>
-                                    </div>
-                                </div>
-
-                                {getDailyData().length > 0 && (
-                                    <div className="chart-card">
-                                        <div className="chart-header">
-                                            <h3>📅 Daily Spending</h3>
-                                        </div>
-                                        <div className="chart-container">
-                                            <canvas ref={barChartRef}></canvas>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                            {getMonthlyData().length > 1 && (
-                                <div className="chart-card" style={{ marginTop: '2rem' }}>
-                                    <div className="chart-header">
-                                        <h3>📈 Monthly Trend</h3>
-                                    </div>
-                                    <div className="chart-container">
-                                        <canvas ref={lineChartRef}></canvas>
-                                    </div>
-                                </div>
-                            )}
-                        </>
-                    )}
-
-                    {summary.byCategory.length === 0 && (
-                        <div className="expense-list">
-                            <div className="empty-state">
-                                <div className="empty-state-icon">📭</div>
-                                <h3>No expenses for this month</h3>
-                                <p>Select a different month or add some expenses</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        }
-
-        // ============================================
-        // RENDER APP
-        // ============================================
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<ExpenseTracker />);
-    </script>
-</body>
-</html>
+                                            return 'Total
