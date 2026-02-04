@@ -3,23 +3,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackSmart - Student Expense Tracker</title>
-    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
     <!-- Babel Standalone for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
-    <style>
+<style>
         :root {
             --primary: #10b981;
             --primary-dark: #059669;
@@ -718,9 +714,9 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
+<script type="text/babel">
         const { useState, useEffect, useRef } = React;
-
+    
         // ============================================
         // CATEGORY CONFIGURATION
         // ============================================
