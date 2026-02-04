@@ -3,16 +3,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackSmart - Student Expense Tracker</title>
-    <!-- Google Fonts -->
+    
+    <!- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- React & ReactDOM -->
+    <!- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Babel Standalone for JSX -->
+    <!- Babel Standalone for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- Chart.js -->
+    <!- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
 <style>
@@ -52,7 +53,7 @@
             padding: 0 1rem;
         }
 
-        /* Header */
+        / Header */
         .header {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
@@ -137,7 +138,7 @@
             color: var(--primary-dark);
         }
 
-        /* Main Content */
+        / Main Content */
         .main-content {
             padding: 2rem 0;
             animation: fadeIn 0.4s ease-out;
@@ -154,7 +155,7 @@
             }
         }
 
-        /* Dashboard Stats */
+        / Dashboard Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -229,7 +230,7 @@
             margin-top: 0.25rem;
         }
 
-        /* Expense List */
+        / Expense List */
         .expense-list {
             background: var(--surface);
             border-radius: 16px;
@@ -347,7 +348,7 @@
             color: var(--error);
         }
 
-        /* Empty State */
+        / Empty State */
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
@@ -371,7 +372,7 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Form */
+        / Form */
         .form-card {
             background: var(--surface);
             border-radius: 16px;
@@ -517,7 +518,7 @@
             flex: 1;
         }
 
-        /* Charts */
+        / Charts */
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -548,7 +549,7 @@
             height: 300px;
         }
 
-        /* Month Selector */
+        / Month Selector */
         .month-selector {
             background: var(--surface);
             border-radius: 16px;
@@ -592,7 +593,7 @@
             color: var(--primary-dark);
         }
 
-        /* Category Breakdown */
+        / Category Breakdown */
         .category-breakdown {
             background: var(--surface);
             border-radius: 16px;
@@ -644,7 +645,7 @@
             margin-left: 0.5rem;
         }
 
-        /* Responsive */
+        / Responsive */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -703,7 +704,7 @@
             }
         }
 
-        /* Utility */
+        / Utility */
         .text-error {
             color: var(--error);
             font-size: 0.875rem;
@@ -717,9 +718,9 @@
 <script type="text/babel">
         const { useState, useEffect, useRef } = React;
     
-        // ============================================
-        // CATEGORY CONFIGURATION
-        // ============================================
+        / ============================================
+        / CATEGORY CONFIGURATION
+        / ============================================
         const CATEGORIES = [
             { name: 'Food', icon: '🍕', color: '#f59e0b' },
             { name: 'Travel', icon: '🚗', color: '#3b82f6' },
@@ -733,9 +734,9 @@
             return CATEGORIES.find(c => c.name === categoryName) || CATEGORIES[5];
         };
 
-        // ============================================
-        // STORAGE SERVICE
-        // ============================================
+        / ============================================
+        / STORAGE SERVICE
+        / ============================================
         const StorageService = {
             STORAGE_KEY: 'tracksmart_expenses',
 
@@ -760,9 +761,9 @@
             }
         };
 
-        // ============================================
-        // UTILITY FUNCTIONS
-        // ============================================
+        / ============================================
+        / UTILITY FUNCTIONS
+        / ============================================
         const formatCurrency = (amount) => {
             return new Intl.NumberFormat('en-IN', {
                 style: 'currency',
@@ -789,9 +790,9 @@
             return months[monthIndex];
         };
 
-        // ============================================
-        // MAIN APP COMPONENT
-        // ============================================
+        / ============================================
+        / MAIN APP COMPONENT
+        / ============================================
         function ExpenseTracker() {
             const [expenses, setExpenses] = useState([]);
             const [currentView, setCurrentView] = useState('dashboard');
@@ -799,20 +800,20 @@
             const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
             const [editingExpense, setEditingExpense] = useState(null);
 
-            // Load expenses on mount
+            / Load expenses on mount
             useEffect(() => {
                 const loadedExpenses = StorageService.getExpenses();
                 setExpenses(loadedExpenses);
             }, []);
 
-            // Save expenses whenever they change
+            / Save expenses whenever they change
             useEffect(() => {
                 if (expenses.length > 0 || expenses.length === 0) {
                     StorageService.saveExpenses(expenses);
                 }
             }, [expenses]);
 
-            // Filter expenses by selected month
+            / Filter expenses by selected month
             const getMonthExpenses = () => {
                 return expenses.filter(expense => {
                     const expenseDate = new Date(expense.date);
@@ -821,12 +822,12 @@
                 });
             };
 
-            // Calculate monthly summary
+            / Calculate monthly summary
             const getMonthSummary = () => {
                 const monthExpenses = getMonthExpenses();
                 const total = monthExpenses.reduce((sum, exp) => sum + exp.amount, 0);
 
-                // Category totals
+                / Category totals
                 const byCategory = CATEGORIES.map(cat => {
                     const categoryTotal = monthExpenses
                         .filter(exp => exp.category === cat.name)
@@ -837,12 +838,12 @@
                     };
                 }).filter(cat => cat.total > 0);
 
-                // Highest spending category
+                / Highest spending category
                 const highest = byCategory.reduce((max, cat) => 
                     cat.total > (max?.total || 0) ? cat : max, null
                 );
 
-                // Average daily spending
+                / Average daily spending
                 const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
                 const avgDaily = total / daysInMonth;
 
@@ -851,7 +852,7 @@
 
             const summary = getMonthSummary();
 
-            // Add or update expense
+            / Add or update expense
             const handleSaveExpense = (expenseData) => {
                 if (editingExpense) {
                     setExpenses(expenses.map(exp => 
@@ -864,26 +865,26 @@
                 setCurrentView('dashboard');
             };
 
-            // Delete expense
+            / Delete expense
             const handleDeleteExpense = (id) => {
                 if (confirm('Are you sure you want to delete this expense?')) {
                     setExpenses(expenses.filter(exp => exp.id !== id));
                 }
             };
 
-            // Start editing
+            / Start editing
             const handleEditExpense = (expense) => {
                 setEditingExpense(expense);
                 setCurrentView('add');
             };
 
-            // Cancel editing
+            / Cancel editing
             const handleCancelEdit = () => {
                 setEditingExpense(null);
                 setCurrentView('dashboard');
             };
 
-            // Navigate months
+            / Navigate months
             const changeMonth = (delta) => {
                 let newMonth = selectedMonth + delta;
                 let newYear = selectedYear;
@@ -977,9 +978,9 @@
             );
         }
 
-        // ============================================
-        // DASHBOARD COMPONENT
-        // ============================================
+        / ============================================
+        / DASHBOARD COMPONENT
+        / ============================================
         function Dashboard({ summary, expenses, onEdit, onDelete, onAddClick }) {
             return (
                 <div>
@@ -1082,9 +1083,9 @@
             );
         }
 
-        // ============================================
-        // EXPENSE FORM COMPONENT
-        // ============================================
+        / ============================================
+        / EXPENSE FORM COMPONENT
+        / ============================================
         function ExpenseForm({ onSave, onCancel, editingExpense }) {
             const [formData, setFormData] = useState({
                 amount: editingExpense?.amount || '',
@@ -1203,9 +1204,9 @@
             );
         }
 
-        // ============================================
-        // SUMMARY COMPONENT
-        // ============================================
+        / ============================================
+        / SUMMARY COMPONENT
+        / ============================================
         function Summary({ summary, expenses, selectedMonth, selectedYear, onMonthChange }) {
             const pieChartRef = useRef(null);
             const barChartRef = useRef(null);
@@ -1214,7 +1215,7 @@
             const barChartInstance = useRef(null);
             const lineChartInstance = useRef(null);
 
-            // Get daily data for bar chart
+            / Get daily data for bar chart
             const getDailyData = () => {
                 const monthExpenses = expenses.filter(exp => {
                     const expDate = new Date(exp.date);
@@ -1232,7 +1233,7 @@
                     .sort((a, b) => a.day - b.day);
             };
 
-            // Get monthly comparison data
+            / Get monthly comparison data
             const getMonthlyData = () => {
                 const monthlyTotals = {};
 
@@ -1249,12 +1250,12 @@
 
                 return Object.values(monthlyTotals)
                     .sort((a, b) => a.sortKey.localeCompare(b.sortKey))
-                    .slice(-6); // Last 6 months
+                    .slice(-6); / Last 6 months
             };
 
-            // Render charts
+            / Render charts
             useEffect(() => {
-                // Pie Chart
+                / Pie Chart
                 if (pieChartRef.current && summary.byCategory.length > 0) {
                     if (pieChartInstance.current) {
                         pieChartInstance.current.destroy();
@@ -1298,7 +1299,7 @@
                     });
                 }
 
-                // Bar Chart
+                / Bar Chart
                 const dailyData = getDailyData();
                 if (barChartRef.current && dailyData.length > 0) {
                     if (barChartInstance.current) {
@@ -1354,7 +1355,7 @@
                     });
                 }
 
-                // Line Chart
+                / Line Chart
                 const monthlyData = getMonthlyData();
                 if (lineChartRef.current && monthlyData.length > 1) {
                     if (lineChartInstance.current) {
